@@ -12,14 +12,20 @@ public class GameScreen extends JPanel {
     private Random random;
     private final BufferedImage img;
     private final ArrayList<BufferedImage> sprites = new ArrayList<>();
+    private int frames;
+    private long lastTime;
+
+
 
 
     public GameScreen(BufferedImage img){
+
         Random random =  new Random();
 
         this.img = img;
         //Don't call the methods until you use your constructor genius
         loadSprites();
+
     }
 
     private void loadSprites() {
@@ -69,6 +75,19 @@ public class GameScreen extends JPanel {
         }
 
 
+
+        callFPS();
+
+    }
+
+    private void callFPS(){
+        frames++;
+        if(System.currentTimeMillis()- lastTime >= 1000){
+            System.out.println("FPS:" + frames );
+            frames =0;
+            lastTime = System.currentTimeMillis();
+
+        }
     }
 }
 
