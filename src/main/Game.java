@@ -13,7 +13,6 @@ public class Game extends JFrame implements Runnable {
 
     private static final double FPS_SET = 144;
     private static final double UPS_SET = 60;
-    private BufferedImage img;
 
     private MyMouseListener myMouseListener;
     private MyKeyboardListener myKeyboardListener;
@@ -21,10 +20,9 @@ public class Game extends JFrame implements Runnable {
 
     //Constructor
     public Game(){
-        importImg();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        GameScreen gameScreen = new GameScreen(img);
+        GameScreen gameScreen = new GameScreen(this);
         add(gameScreen);
 
         pack();
@@ -41,16 +39,7 @@ public class Game extends JFrame implements Runnable {
         requestFocus();
     }
 
-    private void importImg() {
-        InputStream is = getClass().getResourceAsStream("/res/atlas.png");
 
-        try {
-            assert is != null;
-            img = ImageIO.read(is);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
 
     private void updateGame() {
@@ -103,7 +92,7 @@ public class Game extends JFrame implements Runnable {
             }
             // UPS and FPS counter
             if(System.currentTimeMillis() - lastTimeCheck >= 1000){
-               // System.out.println("FPS " + frames + " | UPS "+ updates);
+                System.out.println("FPS " + frames + " | UPS "+ updates);
                 updates = 0;
                 frames = 0;
                 lastTimeCheck= System.currentTimeMillis();
