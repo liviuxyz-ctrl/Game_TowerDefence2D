@@ -11,6 +11,7 @@ public class GameScreen extends JPanel {
 
     private Random random;
     private final BufferedImage img;
+    private Dimension size;
     private final ArrayList<BufferedImage> sprites = new ArrayList<>();
 
 
@@ -20,11 +21,18 @@ public class GameScreen extends JPanel {
     public GameScreen(BufferedImage img){
 
         Random random =  new Random();
-
         this.img = img;
+        setPanelSize();
         //Don't call the methods until you use your constructor genius
         loadSprites();
 
+    }
+
+    private void setPanelSize() {
+        size = new Dimension(640,640);
+        setMinimumSize(size);
+        setPreferredSize(size);
+        setMaximumSize(size);
     }
 
     private void loadSprites() {

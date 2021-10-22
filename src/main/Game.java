@@ -1,5 +1,8 @@
 package main;
 
+import main.inputs.MyKeyboardListener;
+import main.inputs.MyMouseListener;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
@@ -12,17 +15,30 @@ public class Game extends JFrame implements Runnable {
     private static final double UPS_SET = 60;
     private BufferedImage img;
 
+    private MyMouseListener myMouseListener;
+    private MyKeyboardListener myKeyboardListener;
+
 
     //Constructor
     public Game(){
         importImg();
-        setSize(640, 640);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         GameScreen gameScreen = new GameScreen(img);
         add(gameScreen);
+
+        pack();
         setVisible(true);
 
+    }
+
+    private void initInputs(){
+        myKeyboardListener = new MyKeyboardListener();
+        myMouseListener = new MyMouseListener();
+        addMouseListener(myMouseListener);
+        addMouseMotionListener(myMouseListener);
+        addKeyListener(myKeyboardListener);
+        requestFocus();
     }
 
     private void importImg() {
@@ -44,6 +60,7 @@ public class Game extends JFrame implements Runnable {
     public static void main(String[] args) {
 
         Game game = new Game();
+        game.initInputs();
         game.start();
     }
 
@@ -67,23 +84,26 @@ public class Game extends JFrame implements Runnable {
         int frames = 0;
         int updates = 0;
 
+        long currentTime;
+
         //Render
         while (true){
             // Render
-            if (System.nanoTime() - lastFrame >= timePerFrame) {
+            currentTime = System.nanoTime();
+            if (currentTime - lastFrame >= timePerFrame) {
                 repaint();
-                lastFrame = System.nanoTime();
+                lastFrame = currentTime;
                 frames++;
                 }
             // Update
-            if(System.nanoTime() - lastUpdate >= timePerUpdate){
+            if(currentTime - lastUpdate >= timePerUpdate){
                 updateGame();
-                lastUpdate = System.nanoTime();
+                lastUpdate = currentTime;
                 updates++;
             }
             // UPS and FPS counter
             if(System.currentTimeMillis() - lastTimeCheck >= 1000){
-                System.out.println("FPS " + frames + " | UPS "+ updates);
+               // System.out.println("FPS " + frames + " | UPS "+ updates);
                 updates = 0;
                 frames = 0;
                 lastTimeCheck= System.currentTimeMillis();
