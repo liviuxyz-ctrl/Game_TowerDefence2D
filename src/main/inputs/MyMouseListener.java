@@ -17,13 +17,15 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
         // TODO Auto-generated method stub
 
     }
-
+    //Debugging purposes
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (e.getButton() == MouseEvent.BUTTON1)
-            System.out.println("Left button clicked!");
-        else if (e.getButton() == MouseEvent.BUTTON3)
-            System.out.println("Right button clicked!");
+        switch(e.getButton()){
+            case MouseEvent.BUTTON1-> System.out.println("Left button clicked!");
+            case MouseEvent.BUTTON2-> System.out.println("Middle button clicked!");
+            case MouseEvent.BUTTON3-> System.out.println("right button clicked!");
+        }
+
     }
 
     @Override

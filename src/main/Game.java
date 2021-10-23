@@ -29,7 +29,7 @@ public class Game extends JFrame implements Runnable {
         setLocationRelativeTo(null);
 
         initClasses();
-
+        setResizable(false);
         add(gameScreen);
         pack();
 
@@ -81,8 +81,8 @@ public class Game extends JFrame implements Runnable {
     @Override
     public void run() {
 
-        double timePerFrame = 1000000000.0 / FPS_SET;
-        double timePerUpdate = 1000000000.0 / UPS_SET;
+        double timePerFrame = 10.00E8 / FPS_SET;
+        double timePerUpdate = 10.00E8 / UPS_SET;
 
         long lastFrame = System.nanoTime();
         long lastUpdate = System.nanoTime();
@@ -109,7 +109,7 @@ public class Game extends JFrame implements Runnable {
                 lastUpdate = now;
                 updates++;
             }
-
+            //Display FPS and UPS in console
             if (System.currentTimeMillis() - lastTimeCheck >= 1000) {
                 System.out.println("FPS: " + frames + " | UPS: " + updates);
                 frames = 0;
