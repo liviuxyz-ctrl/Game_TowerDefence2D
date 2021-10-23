@@ -2,12 +2,11 @@ package main;
 
 import main.inputs.MyKeyboardListener;
 import main.inputs.MyMouseListener;
+import main.scenes.Menu;
+import main.scenes.Playing;
+import main.scenes.Settings;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
 
 public class Game extends JFrame implements Runnable {
 
@@ -17,17 +16,32 @@ public class Game extends JFrame implements Runnable {
     private MyMouseListener myMouseListener;
     private MyKeyboardListener myKeyboardListener;
 
+    //Classes
+    private Render render;
+    private Menu menu;
+    private Playing playing;
+    private Settings settings;
+
+
 
     //Constructor
     public Game(){
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         GameScreen gameScreen = new GameScreen(this);
+        initClasses();
         add(gameScreen);
 
         pack();
         setVisible(true);
 
+    }
+
+    public void initClasses() {
+        render = new Render(this);
+        menu = new Menu(this);
+        playing = new Playing(this);
+        settings = new Settings(this);
     }
 
     private void initInputs(){
@@ -58,6 +72,8 @@ public class Game extends JFrame implements Runnable {
         gameThread.start();
 
     }
+
+
 
     @Override
     public void run() {
@@ -103,5 +119,18 @@ public class Game extends JFrame implements Runnable {
 
         //Update
         //checking ups and fps
+
+
+
+
+    }
+
+    //Getter and setters
+    public Render getRender() {
+        return render;
+    }
+
+    public void setRender(Render render) {
+        this.render = render;
     }
 }
